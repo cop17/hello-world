@@ -48,22 +48,24 @@ public class MyServlet extends HttpServlet {
 			System.out.println("Failed to make connection!");
 		}
 		try {
-			String selectSQL = "SELECT * FROM myTable WHERE MYUSER LIKE ?";
-			String theUserName = "user%";
+			String selectSQL = "SELECT * FROM open_items";
+			//String theUserName = "user%";
 			response.getWriter().println(selectSQL + "<br>");
 			response.getWriter().println("------------------------------------------<br>");
 			PreparedStatement preparedStatement = connection.prepareStatement(selectSQL);
-			preparedStatement.setString(1, theUserName);
+			//preparedStatement.setString(1, theUserName);
 			ResultSet rs = preparedStatement.executeQuery();
 			while (rs.next()) {
-				String id = rs.getString("ID");
-				String username = rs.getString("MYUSER");
-				String email = rs.getString("EMAIL");
-				String phone = rs.getString("PHONE");
-				response.getWriter().append("USER ID: " + id + ", ");
-				response.getWriter().append("USER NAME: " + username + ", ");
-				response.getWriter().append("USER EMAIL: " + email + ", ");
-				response.getWriter().append("USER PHONE: " + phone + "<br>");
+				String id = rs.getString("id");
+				String item = rs.getString("Item");
+				String priority = rs.getString("Priority");
+				String cost = rs.getString("Cost");
+				String store = rs.getString("Store");
+				response.getWriter().append("Item ID: " + id + ", ");
+				response.getWriter().append("Item: " + item + ", ");
+				response.getWriter().append("Prioirty: " + priority + ", ");
+				response.getWriter().append("Cost: " + cost + ", ");
+				response.getWriter().append("Store:" + store + "<br>");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -74,4 +76,3 @@ public class MyServlet extends HttpServlet {
 		doGet(request, response);
 	}
 }
-
