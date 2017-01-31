@@ -1,3 +1,7 @@
+import java.io.*;
+import java.util.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -25,7 +29,7 @@ public class MyServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html;charset=UTF-8");
-		response.getWriter().println("-------- MySQL JDBC Connection Testing ------------<br>");
+		response.getWriter().println("-------- Connor's SUPER Basic Wedding Registry ------------<br>");
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 		} catch (ClassNotFoundException e) {
@@ -33,7 +37,7 @@ public class MyServlet extends HttpServlet {
 			e.printStackTrace();
 			return;
 		}
-		response.getWriter().println("MySQL JDBC Driver Registered!<br>");
+		response.getWriter().println("You Can Select or Add Items!<br>");
 		connection = null;
 		try {
 			connection = DriverManager.getConnection(url, user, password);
@@ -43,15 +47,15 @@ public class MyServlet extends HttpServlet {
 			return;
 		}
 		if (connection != null) {
-			response.getWriter().println("You made it, take control your database now!<br>");
+			response.getWriter().println("Feel Free to Contact Others About Their Items!<br>");
 		} else {
 			System.out.println("Failed to make connection!");
 		}
 		try {
 			String selectSQL = "SELECT * FROM open_items";
 			//String theUserName = "user%";
-			response.getWriter().println(selectSQL + "<br>");
-			response.getWriter().println("------------------------------------------<br>");
+			//response.getWriter().println(selectSQL + "<br>");
+			response.getWriter().println("<br><br>-------------------------------------------------------------------------------------------------<br>");
 			PreparedStatement preparedStatement = connection.prepareStatement(selectSQL);
 			//preparedStatement.setString(1, theUserName);
 			ResultSet rs = preparedStatement.executeQuery();
@@ -65,7 +69,38 @@ public class MyServlet extends HttpServlet {
 				response.getWriter().append("Item: " + item + ", ");
 				response.getWriter().append("Prioirty: " + priority + ", ");
 				response.getWriter().append("Cost: " + cost + ", ");
-				response.getWriter().append("Store:" + store + "<br>");
+				response.getWriter().append("Store:" + store + "<br><br><br><br><br>");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		try {
+			String selectSQL = "SELECT * FROM taken_items";
+			//String theUserName = "user%";
+			//response.getWriter().println(selectSQL + "<br>");
+			response.getWriter().println("<br><br>-------------------------------------------------------------------------------------------------<br>");
+			PreparedStatement preparedStatement = connection.prepareStatement(selectSQL);
+			//preparedStatement.setString(1, theUserName);
+			ResultSet rs = preparedStatement.executeQuery();
+			while (rs.next()) {
+				String id = rs.getString("id");
+				String item = rs.getString("Item");
+				String priority = rs.getString("Priority");
+				String cost = rs.getString("Store");
+				String store = rs.getString("Price");
+				String fn = rs.getString("first_name");
+				String ln = rs.getString("last_name");
+				String em = rs.getString("eMail");
+				String pn = rs.getString("phoneNumber");
+				response.getWriter().append("Item ID: " + id + ", ");
+				response.getWriter().append("Item: " + item + ", ");
+				response.getWriter().append("Prioirty: " + priority + ", ");
+				response.getWriter().append("Store: " + cost + ", ");
+				response.getWriter().append("Cost:" + store + "<br>");
+				response.getWriter().append("First Name: " + fn + ", ");
+				response.getWriter().append("Last Name: " + ln + ", ");
+				response.getWriter().append("E-mail: " + em + ", ");
+				response.getWriter().append("Phone Number:" + pn + "<br>");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
