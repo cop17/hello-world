@@ -69,11 +69,53 @@ public class MyServlet extends HttpServlet {
 				response.getWriter().append("Item: " + item + ", ");
 				response.getWriter().append("Prioirty: " + priority + ", ");
 				response.getWriter().append("Cost: " + cost + ", ");
-				response.getWriter().append("Store:" + store + "<br><br><br><br><br>");
+				response.getWriter().append("Store:" + store + "<br>");
 			}
+			response.getWriter().append("<br><br><br><br>");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		
+		
+		
+		
+		
+		PrintWriter out = response.getWriter();
+        out.println("<html>");
+        out.println("<head>");
+        out.println("<title>Request Parameters Example</title>");
+        out.println("</head>");
+        out.println("<body>");
+       //out.println("<h3>Request Parameters Example</h3>");
+        out.println("Parameters in this request:<br>");
+       // if (firstName != null || lastName != null) {
+       //     out.println("First Name:");
+       //     out.println(" = " + HTMLFilter.filter(firstName) + "<br>");
+       //     out.println("Last Name:");
+       //     out.println(" = " + HTMLFilter.filter(lastName));
+       // } else {
+       //     out.println("No Parameters, Please enter some");
+       // }
+        out.println("<P>");
+        out.print("<form action=\"");
+        out.print("MyServlet\" ");
+        out.println("method=POST>");
+        out.println("First Name:");
+        out.println("<input type=text size=20 name=firstname>");
+        out.println("<br>");
+        out.println("Last Name:");
+        out.println("<input type=text size=20 name=lastname>");
+        out.println("<br>");
+        out.println("<input type=submit>");
+        out.println("</form>");
+        out.println("</body>");
+        out.println("</html>");
+		
+		
+		
+		
+		
+		
 		try {
 			String selectSQL = "SELECT * FROM taken_items";
 			//String theUserName = "user%";
@@ -111,3 +153,5 @@ public class MyServlet extends HttpServlet {
 		doGet(request, response);
 	}
 }
+
+
